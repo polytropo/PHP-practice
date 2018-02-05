@@ -80,6 +80,7 @@ foreach ($array as $number) {
 	echo $number . "<br>";
 }
 
+
 $assocArray = array ("Mickey" => "Mouse", "Super" => "Mario", "Goku" => "pokemon");
 print_r($assocArray);
 foreach ($assocArray as $key => $value) {
@@ -92,6 +93,21 @@ echo "<br>" . $multiArray["Family"][1] . "<br>";
 foreach($multiArray["Family"] as $value) {
 	echo $value . "<br>";
 }
+?>
+
+<?php 
+	if(isset($_POST["submit"])) {
+		$username = $_POST["username"];
+		$password = $_POST["password"];
+		
+		$connection = mysqli_connect("localhost", "root", "", "databasename");
+		$query = "INSERT INTO usernames (username, password) VALUES ('$username', '$password')";
+		$result = mysql_query ($connection, $query);
+		if(!$result) {
+			die "Error inserting" . mysqli_error();
+		}
+	}
+
 ?>
 
 </body>
