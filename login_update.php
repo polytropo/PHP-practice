@@ -16,8 +16,8 @@
 	} 
  
  	if(isset($_POST["update"])) {
- 		$username = $_POST["username"];
- 		$password = $_POST["password"];
+ 		$username = mysqli_real_escape_string($connection, $_POST["username"]);
+ 		$password = mysqli_real_escape_string($connection, $_POST["password"]);
  		$id = $_POST["id"];
 
  		$queryUpdate = "UPDATE usernames SET ";

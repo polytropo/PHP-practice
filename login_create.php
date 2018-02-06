@@ -9,8 +9,8 @@
 	
 
 	if(isset($_POST['submit'])){
-		$username = $_POST['username'];
-		$password = $_POST['password'];
+		$username = mysql_real_escape_string($connection, $_POST['username']);
+		$password = mysql_real_escape_string($connection, $_POST['password']);
 
 		if ($username != "" || $password !=""){
 			$query = "INSERT INTO usernames(username, password) ";
