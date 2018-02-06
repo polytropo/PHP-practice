@@ -65,6 +65,7 @@
 							while ($row = mysqli_fetch_assoc($result)){
 								// print_r($row);
 								$id = $row['id'];
+							
 								echo "<option value='$id'>$id</option>";
 							}
 						?>
