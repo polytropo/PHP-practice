@@ -28,19 +28,22 @@
 	<title>Document</title>
 </head>
 <body>
-	<div class="container">
-		<div class="col-6">
-			<?php 
-				while($row = mysqli_fetch_assoc($result)) {
-			?>
-					<div class="card p-3 my-3">
-			<?php		
-					print_r($row);
-			?>
-					</div>
-			<?php
-				}
-			?>
+	<div class="p-5">
+		<h1>Usernames:</h1>
+		<div class="container">
+			<div class="col-6">
+				<?php 
+					while($row = mysqli_fetch_assoc($result)) {
+				?>
+						<div class="card p-3 my-3">
+				<?php		
+						print_r($row);
+				?>
+						</div>
+				<?php
+					}
+				?>
+			</div>
 		</div>
 	</div>
 

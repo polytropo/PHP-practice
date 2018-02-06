@@ -44,37 +44,40 @@
 	<title>Document</title>
 </head>
 <body>
-	<div class="col-6">
-		<form class="form-control" action="login_create.php" method="post" accept-charset="utf-8">
-			<div class="form-group">
-				<label for="username">Username: </label>
-				<input type="text" name="username" class="form-control">
-			</div>
-			<div class="form-group">
-				<label for="password">Password: </label>
-				<input type="text" name="password" class="form-control">
-			</div>
-			
-			
-			<input class="btn btn-primary" type="submit" name="submit" value="Submit Username">
-			
-		</form>
-
-	</div>
-	<br>
-	<div class="container">
+	<div class="p-5">
+		<h1>CREATE</h1>
 		<div class="col-6">
-			<?php 
-				while($row = mysqli_fetch_assoc($resultAll)) {
-			?>
-					<div class="card p-3 my-3">
-			<?php		
-					print_r($row);
-			?>
-					</div>
-			<?php
-				}
-			?>
+			<form class="form-control" action="login_create.php" method="post" accept-charset="utf-8">
+				<div class="form-group">
+					<label for="username">Username: </label>
+					<input type="text" name="username" class="form-control">
+				</div>
+				<div class="form-group">
+					<label for="password">Password: </label>
+					<input type="text" name="password" class="form-control">
+				</div>
+				
+				
+				<input class="btn btn-primary" type="submit" name="submit" value="Submit Username">
+				
+			</form>
+
+		</div>
+		<br>
+		<div class="container">
+			<div class="col-6">
+				<?php 
+					while($row = mysqli_fetch_assoc($resultAll)) {
+				?>
+						<div class="card p-3 my-3">
+				<?php		
+						print_r($row);
+				?>
+						</div>
+				<?php
+					}
+				?>
+			</div>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
