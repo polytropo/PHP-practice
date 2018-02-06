@@ -6,32 +6,34 @@
 		
 		die ("Database connection failed");
 	}
+	
 
-	$query = "SELECT * FROM usernames";
+	if(isset($_POST['submit'])){
+		$username = $_POST['username'];
+		$password = $_POST['password'];
 
-	$result = mysqli_query($connection, $query);
+		if ($username != "" || $password !=""){
+			$query = "INSERT INTO usernames(username, password) ";
+			$query .= "VALUES ('$username','$password')";
 
-	if(!$result) {
-		die("Insert  failed " . mysqli_error($connection)); 
-	} 
- 
- 	if(isset($_POST["update"])) {
- 		$username = $_POST["username"];
- 		$password = $_POST["password"];
- 		$id = $_POST["id"];
+			$result = mysqli_query($connection, $query);
 
- 		$query = "UPDATE usernames SET ";
- 		$query .= "username='$username', password='$password' ";
- 		$query .= "WHERE id = $id";
-
- 		$updateSql = mysqli_query($connection, $query);
- 		if(!$updateSql) {
- 			die ("QUERY FAILED");
-
- 		} 
+			if(!$result) {
+				die("Insert  failed " . mysqli_error($connection)); 
+			} else {
+				echo "Username " . $username . " with password: " . $password;
+			}
+		}
  	}
+ 	
+ 	$queryAll = "SELECT * FROM usernames";
+	
+	$resultAll = mysqli_query($connection, $queryAll);
+	
+
 	mysqli_close($connection);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +45,7 @@
 </head>
 <body>
 	<div class="col-6">
-		<form class="form-control" action="login_update.php" method="post" accept-charset="utf-8">
+		<form class="form-control" action="login_create.php" method="post" accept-charset="utf-8">
 			<div class="form-group">
 				<label for="username">Username: </label>
 				<input type="text" name="username" class="form-control">
@@ -52,31 +54,18 @@
 				<label for="password">Password: </label>
 				<input type="text" name="password" class="form-control">
 			</div>
-			<div class="form-group">
-				
-				<select  id="" name="id">
-					<?php
-
-						while ($row = mysqli_fetch_assoc($result)){
-							// print_r($row);
-							$id = $row['id'];
-							echo "<option value='$id'>$id</option>";
-						}
-					?>
-				
-
-			</div>
 			
-			<input class="btn btn-primary" type="submit" name="update" value="Update">
+			
+			<input class="btn btn-primary" type="submit" name="submit" value="Submit Username">
 			
 		</form>
 
-		</div>
-	<div class="col-6">
+	</div>
+	<br>
+	<div class="container">
 		<div class="col-3">
 			<?php 
-			print_r($row);
-				while($row = mysqli_fetch_assoc($result)) {
+				while($row = mysqli_fetch_assoc($resultAll)) {
 			?>
 					<div class="card p-3 my-3">
 			<?php		

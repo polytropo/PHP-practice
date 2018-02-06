@@ -1,21 +1,21 @@
 <?php 	
 	
 		
-		$connection = mysqli_connect('localhost', 'root', '', 'phptest');
-		if ($connection) {
-			echo "We are connected";
-		}  else {
-			die("Database connection failed");
-		}
+	$connection = mysqli_connect('localhost', 'root', '', 'phptest');
+	if ($connection) {
+		echo "We are connected";
+	}  else {
+		die("Database connection failed");
+	}
 
-		$query = "SELECT * FROM usernames";
+	$query = "SELECT * FROM usernames";
 
-		$result = mysqli_query($connection, $query);
+	$result = mysqli_query($connection, $query);
 
-		if(!$result) {
-			die("Insert  failed " . mysqli_error($connection)); 
-		} 
-	 
+	if(!$result) {
+		die("Insert  failed " . mysqli_error($connection)); 
+	} 
+	mysqli_close($connection);
 	
 ?>
 
