@@ -10,6 +10,14 @@
 		}
 	}
 	
+	$randomTxt = "randomValue in here";
+	$hashFormat = "$2y$10$";
+	$salt = "iusesomecrazystrings22";
+	$hashSalt = $hashFormat . $salt;
+	$encryptedRandomTxt = crypt($randomTxt, $hashSalt);
+	
+	echo $encryptedRandomTxt;
+
 	
 
 ?>

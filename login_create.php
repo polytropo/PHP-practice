@@ -11,10 +11,15 @@
 	if(isset($_POST['submit'])){
 		$username = mysqli_real_escape_string($connection, $_POST['username']);
 		$password = mysqli_real_escape_string($connection, $_POST['password']);
+		
+		$hashFormat = "$2y$10$";
+		$salt = "iusesomecrazystrings22";
+		$hashSalt = $hashFormat . $salt;
+		$encryptedPassword = crypt($password, $hashSalt);
 
 		if ($username != "" || $password !=""){
 			$query = "INSERT INTO usernames(username, password) ";
-			$query .= "VALUES ('$username','$password')";
+			$query .= "VALUES ('$username','$encryptedPassword')";
 
 			$result = mysqli_query($connection, $query);
 
@@ -54,7 +59,7 @@
 				</div>
 				<div class="form-group">
 					<label for="password">Password: </label>
-					<input type="text" name="password" class="form-control">
+					<input type="password" name="password" class="form-control">
 				</div>
 				
 				
