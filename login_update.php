@@ -20,16 +20,19 @@
  		$password = $_POST["password"];
  		$id = $_POST["id"];
 
- 		$query = "UPDATE usernames SET ";
- 		$query .= "username='$username', password='$password' ";
- 		$query .= "WHERE id = $id";
+ 		$queryUpdate = "UPDATE usernames SET ";
+ 		$queryUpdate .= "username='$username', password='$password' ";
+ 		$queryUpdate .= "WHERE id = $id";
 
- 		$updateSql = mysqli_query($connection, $query);
+ 		$updateSql = mysqli_query($connection, $queryUpdate);
  		if(!$updateSql) {
  			die ("QUERY FAILED");
 
  		} 
  	}
+ 	
+	
+	$resultAll = mysqli_query($connection, $query);
 	mysqli_close($connection);
 ?>
 
@@ -72,11 +75,10 @@
 		</form>
 
 		</div>
-	<div class="col-6">
-		<div class="col-3">
+	<div class="container">
+		<div class="col-6">
 			<?php 
-			print_r($row);
-				while($row = mysqli_fetch_assoc($result)) {
+				while($row = mysqli_fetch_assoc($resultAll)) {
 			?>
 					<div class="card p-3 my-3">
 			<?php		

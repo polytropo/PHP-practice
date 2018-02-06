@@ -63,7 +63,7 @@
 	</div>
 	<br>
 	<div class="container">
-		<div class="col-3">
+		<div class="col-6">
 			<?php 
 				while($row = mysqli_fetch_assoc($resultAll)) {
 			?>
