@@ -16,6 +16,7 @@
 		$salt = "iusesomecrazystrings22";
 		$hashSalt = $hashFormat . $salt;
 		$encryptedPassword = crypt($password, $hashSalt);
+		
 
 		if ($username != "" || $password !=""){
 			$query = "INSERT INTO usernames(username, password) ";

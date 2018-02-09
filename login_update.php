@@ -16,6 +16,7 @@
 	} 
  
  	if(isset($_POST["update"])) {
+ 		//  CHeck for update submit - - - -  - - - 
  		$username = mysqli_real_escape_string($connection, $_POST["username"]);
  		$password = mysqli_real_escape_string($connection, $_POST["password"]);
  		$id = $_POST["id"];
@@ -26,13 +27,39 @@
 
  		$updateSql = mysqli_query($connection, $queryUpdate);
  		if(!$updateSql) {
- 			die ("QUERY FAILED");
+ 			die ("QUERY FAILED"); 
+ 		} else { echo "Users" . $id . " updated.";};
+ 	} else if(isset($_POST['create'])){
+		// Check for create submit! - - - - -  - -
+		$username = mysqli_real_escape_string($connection, $_POST['username']);
+		$password = mysqli_real_escape_string($connection, $_POST['password']);
+		
+		$hashFormat = "$2y$10$";
+		$salt = "iusesomecrazystrings22";
+		$hashSalt = $hashFormat . $salt;
+		$encryptedPassword = crypt($password, $hashSalt);
+		
 
- 		} 
+		if ($username != "" || $password !=""){
+			$queryCreate = "INSERT INTO usernames(username, password) ";
+			$queryCreate .= "VALUES ('$username','$encryptedPassword')";
+
+			$resultCreate = mysqli_query($connection, $queryCreate);
+
+			if(!$resultCreate) {
+				die("Insert  failed " . mysqli_error($connection)); 
+			} else {
+				echo "Username " . $username . " with password: " . $password;
+			}
+		}
  	}
  	
-	
+ 	
+ 	$queryAll = "SELECT * FROM usernames";
+
 	$resultAll = mysqli_query($connection, $query);
+	
+	
 	mysqli_close($connection);
 ?>
 
@@ -45,55 +72,80 @@
 	<title>Document</title>
 </head>
 <body>
-	<div class="p-5">
-		<h1>UPDATE</h1>
-		<div class="col-6">
-			<form class="form-control" action="login_update.php" method="post" accept-charset="utf-8">
-				<div class="form-group">
-					<label for="username">Username: </label>
-					<input type="text" name="username" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="password">Password: </label>
-					<input type="password" name="password" class="form-control">
-				</div>
-				<div class="form-group">
-					
-					<select  id="" name="id">
-						<?php
-
-							while ($row = mysqli_fetch_assoc($result)){
-								// print_r($row);
-								$id = $row['id'];
-							
-								echo "<option value='$id'>$id</option>";
-							}
-						?>
-					
-
-				</div>
-				
-				<input class="btn btn-primary" type="submit" name="update" value="Update">
-				
-			</form>
-
-			</div>
-		<div class="container">
+	
+		<!-- CREATE/INSERT INTO DATABASE -->
+		<div class="p-5">
+			<h1>CREATE</h1>
 			<div class="col-6">
-				<?php 
-					while($row = mysqli_fetch_assoc($resultAll)) {
-				?>
-						<div class="card p-3 my-3">
-				<?php		
-						print_r($row);
-				?>
-						</div>
-				<?php
-					}
-				?>
+				<form class="form-control" action="login_update.php" method="post" accept-charset="utf-8">
+					<div class="form-group">
+						<label for="username">Username: </label>
+						<input type="text" name="username" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="password">Password: </label>
+						<input type="password" name="password" class="form-control">
+					</div>
+					
+					
+					<input class="btn btn-primary" type="submit" name="create" value="Create Username">
+					
+				</form>
+
 			</div>
 		</div>
-	</div>
+		<!-- UPDATE FORM    - - - -  -->
+		<div class="p-5">
+			<h1>UPDATE</h1>
+			<div class="col-6">
+				<form class="form-control" action="login_update.php" method="post" accept-charset="utf-8">
+					<div class="form-group">
+						<label for="username">Username: </label>
+						<input type="text" name="username" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="password">Password: </label>
+						<input type="password" name="password" class="form-control">
+					</div>
+					<div class="form-group">
+						
+						<select  id="" name="id">
+							<?php
+
+								while ($row = mysqli_fetch_assoc($result)){
+									// print_r($row);
+									$id = $row['id'];
+								
+									echo "<option value='$id'>$id</option>";
+								}
+							?>
+						</select>
+
+					</div>
+					
+					<input class="btn btn-primary" type="submit" name="update" value="Update">
+					
+				</form>
+
+			</div>
+		</div>
+	
+			<div class="container">
+				<div class="col-6">
+					<?php 
+						while($row = mysqli_fetch_assoc($resultAll)) {
+					?>
+							<div class="card p-3 my-3">
+					<?php		
+							print_r($row);
+					?>
+							</div>
+					<?php
+						}
+					?>
+				</div>
+			</div>
+		</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
